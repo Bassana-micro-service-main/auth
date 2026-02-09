@@ -1,0 +1,87 @@
+services:
+  # ============================================================================================
+  # ENV DEV
+  # ============================================================================================
+
+  # ============================================
+  # API 
+  # ============================================
+  api-dev:
+    container_name: authentification-dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mydb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - auth-dev-db
+    restart: unless-stopped
+    profiles: ["dev"]
+
+  # ============================================
+  # DB
+  # ============================================
+  auth-dev-db:
+    image: postgres:18
+    container_name: auth_dev_db
+    environment:
+      POSTGRES_DB: auth_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata-dev:/var/lib/postgresql/data
+    restart: unless-stopped
+    profiles: ["dev"]
+
+
+
+ # ============================================================================================
+ # ENV PROD
+ # ============================================================================================
+
+  # ============================================
+  # API
+  # ============================================
+  api-prod:
+    container_name: authentification-prod
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/mydb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - auth-prod-db
+    restart: unless-stopped
+    profiles: ["prod"]
+
+  
+  # ============================================
+  # DB
+  # ============================================
+  auth-prod-db:
+    image: postgres:18
+    container_name: auth_prod_db
+    environment:
+      POSTGRES_DB: auth_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata-prod:/var/lib/postgresql/data
+    restart: unless-stopped
+    profiles: ["prod"]
+
+volumes:
+  pgdata-dev:
+  pgdata-prod:

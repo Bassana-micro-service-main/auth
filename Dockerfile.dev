@@ -1,0 +1,17 @@
+# ============================================
+#                 DEV
+# ============================================
+FROM gradle:8.7-jdk21 AS dev
+WORKDIR /app
+
+# Copier tout le projet
+COPY . .
+
+# Installer les dépendances sans exécuter les tests
+RUN gradle build -x test --no-daemon
+
+# Expose pour Spring Boot dev
+EXPOSE 8080
+
+# Lancer Spring Boot en mode dev
+CMD ["gradle", "bootRun", "--no-daemon"]

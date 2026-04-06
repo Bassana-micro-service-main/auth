@@ -1,0 +1,92 @@
+---
+description: Gabarit réutilisable — domaine hexagonal Java (ports, validators, policies, erreurs)
+alwaysApply: true
+---
+
+# Gabarit domaine hexagonal (Java)
+
+À réutiliser dans d’autres microservices Spring : structure du **domaine**, **ports**, **erreurs**, **validators**, **policies**, et ce qui reste **hors domaine**.
+
+## 1. Principes
+
+- **Clean / hexagonal** : le domaine au centre ; **application** (cas d’usage) ; **infrastructure** (JPA, HTTP, etc.).
+- **Pas de logique métier dans les controllers** ; pas de Spring / JPA dans le domaine.
+- **SOLID**, tests, conteneurisation : selon la spec projet.
+
+## 2. Arborescence du domaine (`…domain`)
+
+| Zone | Rôle |
+|------|------|
+| **`entities/`** | Agrégats / entités métier **pures** (pas JPA). |
+| **`enums/`** | Enums métier. |
+| **`errors/`** (ou `error/`) | `CodesError` (enum), `BusinessError`, `ErrorRegistry` (codes HTTP **int** suggérés, sans framework web). |
+| **`ports/in/<agrégat>/`** | Ports **entrants** : `*InterfacePort` + `record` **Command** (écriture) ou **Query** (lecture). |
+| **`ports/out/`** | Ports **sortants** : `*RepositoryPort`, implémentés en infrastructure. |
+| **`services/validators/`** | Validation des commandes / requêtes (format, cohérence de saisie). |
+| **`services/policies/`** | Règles transverses : périmètre utilisateur, limites, MFA obligatoire, effets métier (ex. révocation sessions). |
+
+### Dépendances
+
+- Domaine **sans** `infrastructure`, annotations JPA/Web.
+- **`ports`** : uniquement interfaces + types de contrat.
+- **`validators` / `policies`** : peuvent utiliser `entities`, `enums`, `errors` ; pas d’infra.
+
+## 3. Identifiants
+
+- **`id`** : `UUID` identité interne (BD).
+- **`publicId`** : nanoid (routes / API publique).
+- **FK** (`userId`, etc.) : **UUID** interne, **pas** le `publicId` côté stockage de référence.
+
+## 4. Ports entrants (`ports/in/<agrégat>/`)
+
+- Nom des interfaces : **`{Verbe}{Agrégat}InterfacePort`** (ex. `CreateCredentialsInterfacePort`).
+- **Création / mise à jour / suppression** : paramètres regroupés dans un **`record`** `{Action}{Agrégat}Command` (souvent imbriqué dans l’interface).
+- **Lecture** : **`{Action}By…Query`** (suffixe **Query**, pas Command).
+- Les méthodes ne prennent **pas** des champs primitifs épars : toujours **Command** ou **Query**.
+
+## 5. Ports sortants (`ports/out`)
+
+- **`{Agrégat}RepositoryPort`** : `save`, `findBy…`, `delete`, etc. ; retours **`Optional`** / listes d’**entités domaine**.
+- Constante **`REPOSITORY_QUALIFIER`** (`String`) pour `@Qualifier` côté Spring.
+- **Pas** de `findWithPagination` systématique sur l’auth : seulement si un **cas d’usage** (ex. admin) l’exige.
+
+## 6. Erreurs (domaine)
+
+- **`BusinessError`** : `RuntimeException` + `CodesError` + métadonnées optionnelles.
+- **`CodesError`** : enum des codes métier (par agrégat + communs + politiques).
+- **`ErrorRegistry.suggestedHttpStatus(CodesError)`** : entier (400, 401, 403, 404, 409…), **sans** type HTTP du framework.
+
+## 6 bis. Erreurs HTTP (application)
+
+Même idée que `domain/errors`, mais pour le **contrat requête/réponse** (parsing, headers, query, path, méthode, taille du corps) :
+
+- **`CodesHttpError`**, **`HttpRequestError`**, **`HttpErrorRegistry`** dans `…application.errors`.
+- À ne pas confondre avec **`BusinessError`** : ici pas de règle métier, seulement **problème de requête HTTP** avant ou pendant l’adaptation vers le domaine.
+
+## 7. Validators
+
+- **`InputValidators`** (classe utilitaire domaine) : garde-fous **réutilisables** (UUID non nul, nanoid, non vide, `Optional` non blanc, instant futur).
+- Un fichier par flux : **`Create{…}Validators`**, **`Update{…}Validators`**, **`Delete{…}Validators`**, **`Get{…}QueriesValidators`**.
+- **Validators** = *forme / cohérence des entrées* ; **Policies** = *autorisation / limites métier / stratégie*.
+
+## 8. Policies (exemples)
+
+- **Périmètre utilisateur** : l’acteur ne modifie que **ses** ressources (`ACCESS_DENIED` si différent `userId`).
+- **Sessions max** : avant création de session, vérifier le plafond (`SESSIONS_LIMIT_EXCEEDED` → ex. 409).
+- **MFA obligatoire** : si le compte l’exige, au moins un device MFA actif (`MFA_MANDATORY_NOT_ENROLLED`).
+- **Changement de mot de passe** : règle explicite du type « révoquer toutes les sessions » ; implémentation via **application** + ports sortants.
+
+## 9. Hors domaine (`com.…lib` ou équivalent)
+
+- **Regex / motifs partagés** (`EMAIL_REGEX`, `NANOID_REGEX`, `UUID_REGEX`, `BCRYPT_HASH_REGEX`, etc.) dans une classe **`Utils`** (ou similaire) **hors** `domain`, pour ne pas mélanger technique et règle métier dans les entités.
+
+## 10. Infrastructure
+
+- **Entités JPA** (ex. Hibernate) dans `infrastructure/…` ; mappers domaine ↔ persistance dans l’application ou l’infra.
+- Tables SQL : **snake_case**, souvent pluriel + `_table` si convention du projet ; colonnes **snake_case**.
+
+## 11. Nommage Java (rappel)
+
+- Variables / méthodes : **camelCase** ; classes : **PascalCase** ; constantes : **UPPER_SNAKE_CASE** ; packages : **minuscules**.
+
+Pour le détail nommage + SQL : voir aussi les règles **`java-naming-conventions`** et **`id-publicid-convention`** dans ce dépôt.

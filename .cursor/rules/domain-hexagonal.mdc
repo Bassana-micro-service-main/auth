@@ -1,0 +1,8 @@
+---
+description: Renvoie vers le gabarit domaine (détail dans reusable/)
+alwaysApply: true
+---
+
+# Domaine hexagonal
+
+Le détail structuré (dossiers, ports, validators, policies, erreurs, lib) est défini dans **`reusable/hexagonal-java-domain-blueprint.mdc`** — à copier tel quel ou à adapter pour d’autres projets Java.

@@ -1,0 +1,42 @@
+---
+description: Conventions de nommage Java / Spring Boot (Spécifications techniques)
+alwaysApply: true
+---
+
+# Conventions de nommage — Java & Spring Boot
+
+Référence : document *Spécifications techniques* (section CODE, tableau SpringBoot). À appliquer en complément des règles `id` / `publicId` du projet.
+
+## Code Java
+
+| Élément | Convention | Exemples |
+|---------|------------|----------|
+| **Variables** | camelCase | `userName`, `totalCount` |
+| **Méthodes / fonctions** | camelCase | `getUser()`, `calculateTotal()` |
+| **Classes** | PascalCase | `UserService`, `OrderController` |
+| **Constantes globales** | UPPER_SNAKE_CASE | `MAX_LIMIT`, `API_URL` |
+
+## Fichiers
+
+- **Classes Java** : nom en **PascalCase**, fichier identique au nom public de la classe (ex. `UserService.java`).
+- **Fichiers de configuration** (YAML, properties, etc.) : **camelCase** ou **kebab-case** (ex. `application.yml`).
+
+## Packages
+
+- **Uniquement en minuscules**, segments séparés par des points (pas de majuscules dans les segments).
+- Exemple : `com.myapp.users` → dans ce dépôt, rester cohérent avec la racine du projet (ex. `com.auth.…`).
+
+## Base de données (SQL / JPA)
+
+| Élément | Convention | Exemples |
+|---------|------------|----------|
+| **Tables** | snake_case, **pluriel** | `users_table`, `user_roles_table` |
+| **Colonnes** | snake_case | `first_name`, `created_at` |
+
+Les noms de tables/colonnes en base restent en snake_case ; en Java, mapper vers des propriétés camelCase (`firstName`, `createdAt`) comme d’habitude avec JPA.
+
+## Rappels issus du même document (non nommage)
+
+- Principes **SOLID** obligatoires.
+- **Tests** obligatoires (approche **TDD** mentionnée dans la spec).
+- **Conteneurisation** obligatoire pour chaque type d’environnement (dev et prod).

@@ -1,11 +1,11 @@
 package com.auth.domain.ports.in.credentials;
 
-import com.auth.domain.entities.CredentialsEntity;
+import com.auth.domain.entities.Credential;
 import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Port entrant (driving) : consultation d'une entité {@link CredentialsEntity}.
+ * Port entrant (driving) : consultation d'une entité {@link Credential}.
  * Les critères passent uniquement par des requêtes ({@code Query}), pas par des paramètres libres.
  */
 public interface GetCredentialsInterfacePort {
@@ -19,9 +19,9 @@ public interface GetCredentialsInterfacePort {
 	record FindByUserIdQuery(UUID userId) {
 	}
 
-	Optional<CredentialsEntity> findByPublicId(FindByPublicIdQuery query);
+	Optional<Credential> findByPublicId(FindByPublicIdQuery query);
 
-	Optional<CredentialsEntity> findByEmail(FindByEmailQuery query);
+	Optional<Credential> findByEmail(FindByEmailQuery query);
 
-	Optional<CredentialsEntity> findByUserId(FindByUserIdQuery query);
+	Optional<Credential> findByUserId(FindByUserIdQuery query);
 }

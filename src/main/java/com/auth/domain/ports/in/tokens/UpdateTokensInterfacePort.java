@@ -1,11 +1,11 @@
 package com.auth.domain.ports.in.tokens;
 
-import com.auth.domain.entities.TokensEntity;
+import com.auth.domain.entities.Token;
 import java.time.Instant;
 import java.util.Optional;
 
 /**
- * Port entrant (driving) : mise à jour d'une entité {@link TokensEntity}.
+ * Port entrant (driving) : mise à jour d'une entité {@link Token}.
  * Les champs absents ({@link Optional#empty()}) signifient « ne pas modifier ».
  */
 public interface UpdateTokensInterfacePort {
@@ -17,5 +17,5 @@ public interface UpdateTokensInterfacePort {
 	) {
 	}
 
-	TokensEntity update(UpdateTokensCommand command);
+	Token update(UpdateTokensCommand command);
 }

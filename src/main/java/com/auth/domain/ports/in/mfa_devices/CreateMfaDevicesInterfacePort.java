@@ -1,11 +1,11 @@
 package com.auth.domain.ports.in.mfa_devices;
 
-import com.auth.domain.entities.MfaDevicesEntity;
+import com.auth.domain.entities.MfaDevice;
 import com.auth.domain.enums.MfaType;
 import java.util.UUID;
 
 /**
- * Port entrant (driving) : création d'une entité {@link MfaDevicesEntity}.
+ * Port entrant (driving) : création d'une entité {@link MfaDevice}.
  */
 public interface CreateMfaDevicesInterfacePort {
 
@@ -19,5 +19,5 @@ public interface CreateMfaDevicesInterfacePort {
 	) {
 	}
 
-	MfaDevicesEntity create(CreateMfaDevicesCommand command);
+	MfaDevice create(CreateMfaDevicesCommand command);
 }

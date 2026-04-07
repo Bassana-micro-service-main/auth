@@ -1,12 +1,12 @@
 package com.auth.domain.ports.in.tokens;
 
-import com.auth.domain.entities.TokensEntity;
+import com.auth.domain.entities.Token;
 import com.auth.domain.enums.TokenType;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * Port entrant (driving) : consultation d'entités {@link TokensEntity}.
+ * Port entrant (driving) : consultation d'entités {@link Token}.
  * Les critères passent uniquement par des requêtes ({@code Query}).
  */
 public interface GetTokensInterfacePort {
@@ -20,9 +20,9 @@ public interface GetTokensInterfacePort {
 	record FindByValueQuery(String value) {
 	}
 
-	Optional<TokensEntity> findByPublicId(FindByPublicIdQuery query);
+	Optional<Token> findByPublicId(FindByPublicIdQuery query);
 
-	List<TokensEntity> findByType(FindByTypeQuery query);
+	List<Token> findByType(FindByTypeQuery query);
 
-	Optional<TokensEntity> findByValue(FindByValueQuery query);
+	Optional<Token> findByValue(FindByValueQuery query);
 }

@@ -1,10 +1,10 @@
 package com.auth.domain.ports.in.credentials;
 
-import com.auth.domain.entities.CredentialsEntity;
+import com.auth.domain.entities.Credential;
 import java.util.UUID;
 
 /**
- * Port entrant (driving) : création d'une entité {@link CredentialsEntity}.
+ * Port entrant (driving) : création d'une entité {@link Credential}.
  * Implémenté par la couche application (cas d'usage), appelé par les adaptateurs (HTTP, messages, etc.).
  */
 public interface CreateCredentialsInterfacePort {
@@ -20,5 +20,5 @@ public interface CreateCredentialsInterfacePort {
 	) {
 	}
 
-	CredentialsEntity create(CreateCredentialsCommand command);
+	Credential create(CreateCredentialsCommand command);
 }

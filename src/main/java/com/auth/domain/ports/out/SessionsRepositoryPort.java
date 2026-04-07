@@ -1,26 +1,26 @@
 package com.auth.domain.ports.out;
 
-import com.auth.domain.entities.SessionsEntity;
+import com.auth.domain.entities.Session;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Port sortant (driven) : persistance des {@link SessionsEntity}.
+ * Port sortant (driven) : persistance des {@link Session}.
  */
 public interface SessionsRepositoryPort {
 
 	String REPOSITORY_QUALIFIER = "sessionsRepository";
 
-	SessionsEntity save(SessionsEntity entity);
+	Session save(Session entity);
 
-	Optional<SessionsEntity> findById(UUID id);
+	Optional<Session> findById(UUID id);
 
-	Optional<SessionsEntity> findByPublicId(String publicId);
+	Optional<Session> findByPublicId(String publicId);
 
-	List<SessionsEntity> findByUserId(UUID userId);
+	List<Session> findByUserId(UUID userId);
 
-	Optional<SessionsEntity> findByRefreshToken(String refreshToken);
+	Optional<Session> findByRefreshToken(String refreshToken);
 
 	void delete(String publicId);
 }

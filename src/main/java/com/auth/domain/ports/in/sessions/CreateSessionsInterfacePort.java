@@ -1,11 +1,11 @@
 package com.auth.domain.ports.in.sessions;
 
-import com.auth.domain.entities.SessionsEntity;
+import com.auth.domain.entities.Session;
 import java.time.Instant;
 import java.util.UUID;
 
 /**
- * Port entrant (driving) : création d'une entité {@link SessionsEntity}.
+ * Port entrant (driving) : création d'une entité {@link Session}.
  */
 public interface CreateSessionsInterfacePort {
 
@@ -19,5 +19,5 @@ public interface CreateSessionsInterfacePort {
 	) {
 	}
 
-	SessionsEntity create(CreateSessionsCommand command);
+	Session create(CreateSessionsCommand command);
 }

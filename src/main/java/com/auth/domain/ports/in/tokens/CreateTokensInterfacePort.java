@@ -1,11 +1,11 @@
 package com.auth.domain.ports.in.tokens;
 
-import com.auth.domain.entities.TokensEntity;
+import com.auth.domain.entities.Token;
 import com.auth.domain.enums.TokenType;
 import java.time.Instant;
 
 /**
- * Port entrant (driving) : création d'une entité {@link TokensEntity}.
+ * Port entrant (driving) : création d'une entité {@link Token}.
  */
 public interface CreateTokensInterfacePort {
 
@@ -16,5 +16,5 @@ public interface CreateTokensInterfacePort {
 	) {
 	}
 
-	TokensEntity create(CreateTokensCommand command);
+	Token create(CreateTokensCommand command);
 }

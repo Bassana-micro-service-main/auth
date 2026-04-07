@@ -1,12 +1,12 @@
 package com.auth.domain.ports.in.sessions;
 
-import com.auth.domain.entities.SessionsEntity;
+import com.auth.domain.entities.Session;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Port entrant (driving) : consultation d'entités {@link SessionsEntity}.
+ * Port entrant (driving) : consultation d'entités {@link Session}.
  * Les critères passent uniquement par des requêtes ({@code Query}).
  */
 public interface GetSessionsInterfacePort {
@@ -20,9 +20,9 @@ public interface GetSessionsInterfacePort {
 	record FindByRefreshTokenQuery(String refreshToken) {
 	}
 
-	Optional<SessionsEntity> findByPublicId(FindByPublicIdQuery query);
+	Optional<Session> findByPublicId(FindByPublicIdQuery query);
 
-	List<SessionsEntity> findByUserId(FindByUserIdQuery query);
+	List<Session> findByUserId(FindByUserIdQuery query);
 
-	Optional<SessionsEntity> findByRefreshToken(FindByRefreshTokenQuery query);
+	Optional<Session> findByRefreshToken(FindByRefreshTokenQuery query);
 }

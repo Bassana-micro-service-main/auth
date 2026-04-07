@@ -1,12 +1,12 @@
 package com.auth.domain.ports.in.mfa_devices;
 
-import com.auth.domain.entities.MfaDevicesEntity;
+import com.auth.domain.entities.MfaDevice;
 import com.auth.domain.enums.MfaType;
 import java.time.Instant;
 import java.util.Optional;
 
 /**
- * Port entrant (driving) : mise à jour d'une entité {@link MfaDevicesEntity}.
+ * Port entrant (driving) : mise à jour d'une entité {@link MfaDevice}.
  * Les champs absents ({@link Optional#empty()}) signifient « ne pas modifier ».
  */
 public interface UpdateMfaDevicesInterfacePort {
@@ -22,5 +22,5 @@ public interface UpdateMfaDevicesInterfacePort {
 	) {
 	}
 
-	MfaDevicesEntity update(UpdateMfaDevicesCommand command);
+	MfaDevice update(UpdateMfaDevicesCommand command);
 }

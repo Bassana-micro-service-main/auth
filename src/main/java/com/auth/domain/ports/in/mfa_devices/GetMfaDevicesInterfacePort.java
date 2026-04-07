@@ -1,13 +1,13 @@
 package com.auth.domain.ports.in.mfa_devices;
 
-import com.auth.domain.entities.MfaDevicesEntity;
+import com.auth.domain.entities.MfaDevice;
 import com.auth.domain.enums.MfaType;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Port entrant (driving) : consultation d'entités {@link MfaDevicesEntity}.
+ * Port entrant (driving) : consultation d'entités {@link MfaDevice}.
  * Les critères passent uniquement par des requêtes ({@code Query}).
  */
 public interface GetMfaDevicesInterfacePort {
@@ -21,9 +21,9 @@ public interface GetMfaDevicesInterfacePort {
 	record FindByUserIdAndTypeQuery(UUID userId, MfaType type) {
 	}
 
-	Optional<MfaDevicesEntity> findByPublicId(FindByPublicIdQuery query);
+	Optional<MfaDevice> findByPublicId(FindByPublicIdQuery query);
 
-	List<MfaDevicesEntity> findByUserId(FindByUserIdQuery query);
+	List<MfaDevice> findByUserId(FindByUserIdQuery query);
 
-	Optional<MfaDevicesEntity> findByUserIdAndType(FindByUserIdAndTypeQuery query);
+	Optional<MfaDevice> findByUserIdAndType(FindByUserIdAndTypeQuery query);
 }

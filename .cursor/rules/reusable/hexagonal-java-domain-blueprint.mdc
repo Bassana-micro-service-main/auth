@@ -56,7 +56,13 @@ alwaysApply: true
 - **`CodesError`** : enum des codes métier (par agrégat + communs + politiques).
 - **`ErrorRegistry.suggestedHttpStatus(CodesError)`** : entier (400, 401, 403, 404, 409…), **sans** type HTTP du framework.
 
-## 6 bis. Erreurs HTTP (application)
+## 6 bis. DTO application (`…application.dto`)
+
+- Sous-packages par agrégat (`credentials`, `sessions`, `mfa_devices`, `tokens`) : **`record`** `*Dto` alignés sur les **Command** / **Query** des ports entrants du domaine (entrée HTTP / messaging avant mapping vers le port).
+- Recherches : **`Find{Entity}ByPublicIdDto`** (fichier dédié) ; les autres critères de **`Get*InterfacePort`** sont des **`record`** imbriqués dans un fichier **`{Entity}FindListDto`** (ex. `CredentialsFindListDto.ByEmail`, `ByUserId`).
+- Les cas d’usage mappent **Dto → Command/Query** du domaine.
+
+## 6 ter. Erreurs HTTP (application)
 
 Même idée que `domain/errors`, mais pour le **contrat requête/réponse** (parsing, headers, query, path, méthode, taille du corps) :
 

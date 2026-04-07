@@ -8,22 +8,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Identifiants de connexion (équivalent métier de {@code credentials_table}).
+ * Session utilisateur (équivalent métier de {@code sessions_table}).
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CredentialsEntity {
+public class Session {
 
 	private UUID id;
 	private String publicId;
 	private UUID userId;
-	private String email;
-	private String hashedPassword;
-	private String passwordSalt;
-	private Instant passwordLastChangedAt;
-	private boolean active;
+	private String ipAddress;
+	private String userAgent;
+	private String deviceName;
+	private String refreshToken;
+	private Instant expiresAt;
+	private boolean revoked;
 	private Instant createdAt;
 	private Instant updatedAt;
 }

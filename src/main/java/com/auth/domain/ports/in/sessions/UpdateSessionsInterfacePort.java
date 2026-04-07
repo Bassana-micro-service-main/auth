@@ -1,11 +1,11 @@
 package com.auth.domain.ports.in.sessions;
 
-import com.auth.domain.entities.SessionsEntity;
+import com.auth.domain.entities.Session;
 import java.time.Instant;
 import java.util.Optional;
 
 /**
- * Port entrant (driving) : mise à jour d'une entité {@link SessionsEntity}.
+ * Port entrant (driving) : mise à jour d'une entité {@link Session}.
  * Les champs absents ({@link Optional#empty()}) signifient « ne pas modifier ».
  */
 public interface UpdateSessionsInterfacePort {
@@ -21,5 +21,5 @@ public interface UpdateSessionsInterfacePort {
 	) {
 	}
 
-	SessionsEntity update(UpdateSessionsCommand command);
+	Session update(UpdateSessionsCommand command);
 }

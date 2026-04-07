@@ -14,7 +14,7 @@ public final class MfaMandatoryPolicy {
 
 	/**
 	 * @param mfaMandatoryForAccount      règle produit / attribut compte
-	 * @param hasAtLeastOneActiveMfaDevice au moins un {@link com.auth.domain.entities.MfaDevicesEntity} actif pour l'utilisateur
+	 * @param hasAtLeastOneActiveMfaDevice au moins un {@link com.auth.domain.entities.MfaDevice} actif pour l'utilisateur
 	 */
 	public static void requireEnrolledIfMandatory(boolean mfaMandatoryForAccount, boolean hasAtLeastOneActiveMfaDevice) {
 		if (mfaMandatoryForAccount && !hasAtLeastOneActiveMfaDevice) {

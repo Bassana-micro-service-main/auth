@@ -1,9 +1,12 @@
 package com.auth.application.mappers.credentials;
 
 import com.auth.application.dto.credentials.CreateCredentialsDto;
+import com.auth.application.dto.credentials.CredentialsResponseDto;
 import com.auth.application.dto.credentials.GetCredentialsDto;
 import com.auth.application.dto.credentials.ListCredentialsDto;
+import com.auth.application.dto.credentials.UpdateCredentialsBodyDto;
 import com.auth.application.dto.credentials.UpdateCredentialsDto;
+import com.auth.domain.entities.Credential;
 import com.auth.domain.ports.in.credentials.CreateCredentialsInterfacePort.CreateCredentialsCommand;
 import com.auth.domain.ports.in.credentials.GetCredentialsInterfacePort.FindByEmailQuery;
 import com.auth.domain.ports.in.credentials.GetCredentialsInterfacePort.FindByPublicIdQuery;
@@ -33,6 +36,29 @@ public final class CredentialsHttpsMapper {
 				dto.hashedPassword(),
 				dto.passwordSalt(),
 				dto.active());
+	}
+
+	public static UpdateCredentialsCommand toUpdateCommand(String publicId, UpdateCredentialsBodyDto dto) {
+		return new UpdateCredentialsCommand(
+				publicId,
+				dto.email(),
+				dto.hashedPassword(),
+				dto.passwordSalt(),
+				dto.active());
+	}
+
+	public static CredentialsResponseDto toResponse(Credential credential) {
+		if (credential == null) {
+			return null;
+		}
+		return new CredentialsResponseDto(
+				credential.getPublicId(),
+				credential.getUserId(),
+				credential.getEmail(),
+				credential.isActive(),
+				credential.getPasswordLastChangedAt(),
+				credential.getCreatedAt(),
+				credential.getUpdatedAt());
 	}
 
 	public static FindByPublicIdQuery toGetQuery(GetCredentialsDto dto) {

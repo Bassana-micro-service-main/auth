@@ -1,1 +1,7 @@
+plugins {
+	// Télécharge automatiquement un JDK correspondant au toolchain (Java 21) si absent de la machine.
+	// Voir https://docs.gradle.org/current/userguide/toolchains.html#sec:provisioning
+	id 'org.gradle.toolchains.foojay-resolver-convention' version '0.9.0'
+}
+
 rootProject.name = 'project'

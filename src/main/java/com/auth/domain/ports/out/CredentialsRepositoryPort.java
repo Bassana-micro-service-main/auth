@@ -6,7 +6,7 @@ import java.util.UUID;
 
 /**
  * Port sortant (driven) : persistance des {@link Credential}.
- * Implémenté dans l'infrastructure (ex. JPA).
+ * Implémentation typique : {@link com.auth.adapter.out.persistence.CredentialsRepositoryAdapter} (JPA / Hibernate).
  */
 public interface CredentialsRepositoryPort {
 
@@ -19,6 +19,8 @@ public interface CredentialsRepositoryPort {
 	Optional<Credential> findByPublicId(String publicId);
 
 	Optional<Credential> findByEmail(String email);
+
+	Optional<Credential> findByUserId(UUID userId);
 
 	void delete(String publicId);
 }

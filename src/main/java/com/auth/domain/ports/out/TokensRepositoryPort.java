@@ -8,6 +8,7 @@ import java.util.UUID;
 
 /**
  * Port sortant (driven) : persistance des {@link Token}.
+ * Implémentation typique : {@link com.auth.adapter.out.persistence.TokensRepositoryAdapter}.
  */
 public interface TokensRepositoryPort {
 

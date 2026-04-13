@@ -8,6 +8,7 @@ import java.util.UUID;
 
 /**
  * Port sortant (driven) : persistance des {@link MfaDevice}.
+ * Implémentation typique : {@link com.auth.adapter.out.persistence.MfaDevicesRepositoryAdapter}.
  */
 public interface MfaDevicesRepositoryPort {
 

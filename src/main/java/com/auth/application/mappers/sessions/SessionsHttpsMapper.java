@@ -3,7 +3,10 @@ package com.auth.application.mappers.sessions;
 import com.auth.application.dto.sessions.CreateSessionsDto;
 import com.auth.application.dto.sessions.GetSessionsDto;
 import com.auth.application.dto.sessions.ListSessionsDto;
+import com.auth.application.dto.sessions.SessionsResponseDto;
+import com.auth.application.dto.sessions.UpdateSessionsBodyDto;
 import com.auth.application.dto.sessions.UpdateSessionsDto;
+import com.auth.domain.entities.Session;
 import com.auth.domain.ports.in.sessions.CreateSessionsInterfacePort.CreateSessionsCommand;
 import com.auth.domain.ports.in.sessions.GetSessionsInterfacePort.FindByPublicIdQuery;
 import com.auth.domain.ports.in.sessions.GetSessionsInterfacePort.FindByRefreshTokenQuery;
@@ -37,6 +40,33 @@ public final class SessionsHttpsMapper {
 				dto.refreshToken(),
 				dto.expiresAt(),
 				dto.revoked());
+	}
+
+	public static UpdateSessionsCommand toUpdateCommand(String publicId, UpdateSessionsBodyDto dto) {
+		return new UpdateSessionsCommand(
+				publicId,
+				dto.ipAddress(),
+				dto.userAgent(),
+				dto.deviceName(),
+				dto.refreshToken(),
+				dto.expiresAt(),
+				dto.revoked());
+	}
+
+	public static SessionsResponseDto toResponse(Session session) {
+		if (session == null) {
+			return null;
+		}
+		return new SessionsResponseDto(
+				session.getPublicId(),
+				session.getUserId(),
+				session.getIpAddress(),
+				session.getUserAgent(),
+				session.getDeviceName(),
+				session.getExpiresAt(),
+				session.isRevoked(),
+				session.getCreatedAt(),
+				session.getUpdatedAt());
 	}
 
 	public static FindByPublicIdQuery toGetQuery(GetSessionsDto dto) {

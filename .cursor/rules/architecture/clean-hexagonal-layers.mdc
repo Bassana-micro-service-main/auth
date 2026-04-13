@@ -1,0 +1,54 @@
+---
+description: Detail d'implementation Clean/Hexagonal pour services Java
+alwaysApply: true
+---
+
+# Clean Hexagonal Layers
+
+## 1. Couche Domain (`com.<service>.domain`)
+
+- Contient uniquement : `entities`, `enums`, `errors`, `ports`, `services/validators`, `services/policies`.
+- Interdictions : `@Component`, `@Service`, `@Entity`, `ResponseEntity`, `JpaRepository`, clients HTTP.
+- Les erreurs metier sont exprimees via `BusinessError` + `CodesError`.
+
+## 2. Couche Application (`com.<service>.application`)
+
+- Contient les use cases qui implementent les `ports/in`.
+- Dependances autorisees : `domain`, `ports/out`, classes de configuration simples.
+- Responsibilities :
+  - valider via validators de domaine,
+  - orchestrer les appels a un ou plusieurs ports sortants,
+  - appliquer les politiques metier transverses,
+  - retourner des entites/metadonnees de domaine.
+
+## 3. Couche Adapter In (`com.<service>.adapter.in`)
+
+- Controllers REST uniquement.
+- Recoit DTO HTTP, mappe vers command/query de `ports/in`.
+- Ne contient pas de regles metier.
+- Gere seulement les aspects protocolaires (status code, parsing, binding).
+
+## 4. Couche Adapter Out (`com.<service>.adapter.out`)
+
+- Implemente les `ports/out`.
+- Convertit domaine <-> persistence/externe via mappers dedies.
+- Peut utiliser Spring Data/JPA, clients REST, MQ, cache.
+
+## 5. Couche Infrastructure (`com.<service>.infrastructure`)
+
+- Entites JPA, repositories Spring Data, converters, clients techniques.
+- Aucune logique metier ici.
+- Les formats de stockage restent techniques (snake_case SQL, etc.).
+
+## 6. Regles de dependances (sens unique)
+
+- `domain` <- `application` <- `adapter.in`
+- `domain` <- `application` <- `adapter.out` -> `infrastructure`
+- Le domaine ne depend jamais des couches externes.
+
+## 7. Patterns d'implementation recommandes
+
+- `Create*/Update*/Delete*/Get*UseCase` par aggregate.
+- `*HttpsMapper` pour HTTP -> command/query -> response.
+- `*DBMapper` pour domaine <-> persistence.
+- `*Module` (Spring `@Configuration`) pour brancher les implementions de ports.

@@ -1,0 +1,42 @@
+---
+description: Regles de communication inter-services pour architecture microservices
+alwaysApply: false
+---
+
+# Interservice Communication
+
+## 1. Contrats API
+
+- OpenAPI obligatoire par service expose.
+- Versionnement explicite (`/api/v1/...`) pour endpoints publics.
+- Contrats internes stables, backward compatible par defaut.
+- Erreurs homogenes (code metier + message + correlation id).
+
+## 2. Strategie de communication
+
+- Synchrone HTTP pour requetes simples (lecture/ecriture immediate).
+- Asynchrone event-driven pour workflows longs ou decouplage fort.
+- Eviter les chaines d'appels synchrones trop longues (A -> B -> C -> D).
+
+## 3. Timeouts et retries
+
+- Timeout connect + read explicites pour chaque client sortant.
+- Retry uniquement sur erreurs transitoires (5xx, timeout, reset).
+- Pas de retry aveugle sur operations non idempotentes sans cle d'idempotence.
+
+## 4. Idempotence
+
+- POST sensibles (paiement, creation externe) avec `Idempotency-Key`.
+- PUT/PATCH/DELETE doivent rester deterministes cote serveur.
+
+## 5. Donnees echangees
+
+- DTO externes dedies (pas d'exposition brute des entites JPA/domain).
+- Les ids publics (`publicId`) sortent en API, jamais les ids internes root.
+- Horodatages en ISO-8601 UTC.
+
+## 6. Gestion des pannes
+
+- Fallback explicite quand possible (degradation gracieuse).
+- Si un service critique est indisponible: erreur claire, pas de faux succes.
+- Ajouter des compensations metier pour operations multi-services.

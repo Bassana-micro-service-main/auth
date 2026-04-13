@@ -1,5 +1,7 @@
 package com.auth.lib;
 
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.regex.Pattern;
 
 /**
@@ -39,4 +41,28 @@ public final class Utils {
 	 */
 	public static final Pattern BCRYPT_HASH_REGEX = Pattern.compile(
 			"^\\$2[abxy]?\\$[0-9]{2}\\$[./A-Za-z0-9]{53}$");
+
+	private static final String NANO_ALPHABET =
+			"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_-";
+	private static final SecureRandom SECURE_RANDOM = new SecureRandom();
+
+	/**
+	 * Identifiant public nanoid (21 caractères, alphabet aligné sur {@link #NANOID_REGEX}).
+	 */
+	public static String newNanoid() {
+		StringBuilder sb = new StringBuilder(21);
+		for (int i = 0; i < 21; i++) {
+			sb.append(NANO_ALPHABET.charAt(SECURE_RANDOM.nextInt(NANO_ALPHABET.length())));
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * Jeton opaque (URL-safe Base64), pour access / refresh tokens stockés en base.
+	 */
+	public static String newOpaqueToken(int numBytes) {
+		byte[] buf = new byte[numBytes];
+		SECURE_RANDOM.nextBytes(buf);
+		return Base64.getUrlEncoder().withoutPadding().encodeToString(buf);
+	}
 }

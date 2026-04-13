@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.auth.units.use_case.sessions.UpdateSessionsUseCaseTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-04-11T19:26:31.999Z" hostname="mail.bassana.com" time="0.009">
+  <properties/>
+  <testcase name="shouldUpdateAndSave()" classname="com.auth.units.use_case.sessions.UpdateSessionsUseCaseTest" time="0.006"/>
+  <testcase name="notFound()" classname="com.auth.units.use_case.sessions.UpdateSessionsUseCaseTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

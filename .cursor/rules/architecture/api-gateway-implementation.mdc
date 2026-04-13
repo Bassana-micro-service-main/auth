@@ -1,0 +1,47 @@
+---
+description: Structure recommandee pour le projet apo-gateway
+alwaysApply: false
+---
+
+# API Gateway Implementation (apo-gateway)
+
+## 1. Stack cible
+
+- Spring Boot + Spring Cloud Gateway (reactive).
+- Spring Security (JWT verification/introspection selon besoin).
+- Resilience4j (retry, circuit breaker, rate limiter) ou equivalent.
+
+## 2. Arborescence recommandee
+
+- `com.apo.gateway.config` : routes, security, cors, filters.
+- `com.apo.gateway.filters` : filtres globaux (correlation-id, auth context, logs).
+- `com.apo.gateway.routes` : definitions des routes par domaine (`auth`, `user_profile`, etc.).
+- `com.apo.gateway.errors` : mapping d'erreurs standardisees (4xx/5xx).
+- `com.apo.gateway.observability` : metrics, tracing, logs enrichis.
+
+## 3. Responsabilites du gateway
+
+- AuthN/AuthZ perimeter (verification token, scopes/roles techniques).
+- Routage vers microservices internes.
+- Normalisation des headers (`X-Request-Id`, `X-User-Id`, `X-Roles`).
+- Politique CORS centralisee.
+- Limitation de debit et protection de base.
+
+## 4. Ce que le gateway ne doit pas faire
+
+- Pas de logique metier de domaine.
+- Pas de persistence metier.
+- Pas d'orchestration metier complexe (a laisser a un BFF ou service applicatif dedie).
+
+## 5. Exemple de decomposition routes
+
+- `/api/auth/**` -> `auth-service`
+- `/api/users/**` -> `user-profile-service`
+- `/api/credentials/**` -> `auth-service`
+
+Chaque route definit explicitement :
+
+- predicate (`Path`, `Method`),
+- filtres (`StripPrefix`, `RequestRateLimiter`, auth propagation),
+- timeout par service,
+- fallback optionnel.

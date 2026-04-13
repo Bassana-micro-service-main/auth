@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.auth.units.use_case.tokens.CreateTokensUseCaseTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-04-11T19:26:32.011Z" hostname="mail.bassana.com" time="0.069">
+  <properties/>
+  <testcase name="shouldCreate()" classname="com.auth.units.use_case.tokens.CreateTokensUseCaseTest" time="0.065"/>
+  <testcase name="validationBlocksSave()" classname="com.auth.units.use_case.tokens.CreateTokensUseCaseTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

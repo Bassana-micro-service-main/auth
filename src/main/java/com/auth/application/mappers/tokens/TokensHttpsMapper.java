@@ -3,7 +3,10 @@ package com.auth.application.mappers.tokens;
 import com.auth.application.dto.tokens.CreateTokensDto;
 import com.auth.application.dto.tokens.GetTokensDto;
 import com.auth.application.dto.tokens.ListTokensDto;
+import com.auth.application.dto.tokens.TokensResponseDto;
+import com.auth.application.dto.tokens.UpdateTokensBodyDto;
 import com.auth.application.dto.tokens.UpdateTokensDto;
+import com.auth.domain.entities.Token;
 import com.auth.domain.ports.in.tokens.CreateTokensInterfacePort.CreateTokensCommand;
 import com.auth.domain.ports.in.tokens.GetTokensInterfacePort.FindByPublicIdQuery;
 import com.auth.domain.ports.in.tokens.GetTokensInterfacePort.FindByTypeQuery;
@@ -30,6 +33,24 @@ public final class TokensHttpsMapper {
 				dto.publicId(),
 				dto.value(),
 				dto.expiresAt());
+	}
+
+	public static UpdateTokensCommand toUpdateCommand(String publicId, UpdateTokensBodyDto dto) {
+		return new UpdateTokensCommand(
+				publicId,
+				dto.value(),
+				dto.expiresAt());
+	}
+
+	public static TokensResponseDto toResponse(Token token) {
+		if (token == null) {
+			return null;
+		}
+		return new TokensResponseDto(
+				token.getPublicId(),
+				token.getType(),
+				token.getExpiresAt(),
+				token.getCreatedAt());
 	}
 
 	public static FindByPublicIdQuery toGetQuery(GetTokensDto dto) {

@@ -1,0 +1,36 @@
+---
+description: Regles de securite et resilience pour gateway et microservices
+alwaysApply: false
+---
+
+# Security And Resilience
+
+## 1. Authentification et autorisation
+
+- Verification centralisee au gateway (token JWT/OAuth2).
+- Propagation de contexte identite via headers internes controles.
+- Verification de permissions metier sensible aussi cote service (defense in depth).
+
+## 2. Secrets et configuration sensible
+
+- Aucun secret en dur dans le code.
+- Variables d'environnement ou secret manager obligatoires.
+- Rotation des secrets planifiee (JWT keys, credentials DB, API keys).
+
+## 3. Protection du gateway
+
+- Rate limiting par client / route sensible.
+- Taille max des requetes et body limitee.
+- CORS explicitement defini (pas de wildcard en production).
+
+## 4. Resilience runtime
+
+- Circuit breaker sur dependances externes instables.
+- Bulkhead/isolation pour eviter l'epuisement global.
+- Health checks (`/actuator/health/readiness`, `/liveness`) exposes.
+
+## 5. Journalisation securisee
+
+- Ne jamais logger mot de passe, token brut, secret, PII sensible non masquee.
+- Ajouter `requestId`/`traceId` dans chaque log.
+- Niveaux de log par environnement (`INFO` prod, `DEBUG` dev controle).

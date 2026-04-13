@@ -7,6 +7,7 @@ import java.util.UUID;
 
 /**
  * Port sortant (driven) : persistance des {@link Session}.
+ * Implémentation typique : {@link com.auth.adapter.out.persistence.SessionsRepositoryAdapter}.
  */
 public interface SessionsRepositoryPort {
 

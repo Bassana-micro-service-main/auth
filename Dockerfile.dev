@@ -4,7 +4,7 @@
 FROM gradle:8.7-jdk21 AS dev
 WORKDIR /app
 
-# Copier tout le projet
+# Copier le projet (variables DB injectées par docker-compose, pas de .env.dev dans ce dépôt)
 COPY . .
 
 # Installer les dépendances sans exécuter les tests

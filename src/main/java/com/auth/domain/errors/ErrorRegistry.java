@@ -27,7 +27,6 @@ public final class ErrorRegistry {
 				CodesError.SESSIONS_USER_ID_INVALID,
 				CodesError.SESSIONS_IP_ADDRESS_INVALID,
 				CodesError.SESSIONS_USER_AGENT_INVALID,
-				CodesError.SESSIONS_REFRESH_TOKEN_INVALID,
 				CodesError.SESSIONS_DEVICE_NAME_INVALID,
 				CodesError.SESSIONS_EXPIRES_AT_INVALID,
 				CodesError.MFA_DEVICES_PUBLIC_ID_INVALID,
@@ -43,15 +42,19 @@ public final class ErrorRegistry {
 		put(m, 401,
 				CodesError.SESSIONS_EXPIRED,
 				CodesError.SESSIONS_REVOKED,
-				CodesError.TOKENS_EXPIRED);
+				CodesError.TOKENS_EXPIRED,
+				CodesError.AUTH_INVALID_CREDENTIALS,
+				CodesError.AUTH_REFRESH_TOKEN_INVALID,
+				CodesError.SESSIONS_REFRESH_TOKEN_INVALID);
+		put(m, 502, CodesError.USER_PROFILE_UNAVAILABLE);
 		put(m, 403,
 				CodesError.CREDENTIALS_INACTIVE,
 				CodesError.MFA_DEVICES_INACTIVE,
 				CodesError.ACCESS_DENIED,
 				CodesError.MFA_MANDATORY_NOT_ENROLLED);
-		put(m, 409,
-				CodesError.SESSIONS_LIMIT_EXCEEDED);
+		put(m, 409, CodesError.AUTH_EMAIL_ALREADY_REGISTERED, CodesError.SESSIONS_LIMIT_EXCEEDED);
 		put(m, 404,
+				CodesError.USER_PROFILE_USER_NOT_FOUND,
 				CodesError.CREDENTIALS_NOT_FOUND,
 				CodesError.SESSIONS_NOT_FOUND,
 				CodesError.MFA_DEVICES_NOT_FOUND,

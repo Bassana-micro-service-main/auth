@@ -1,12 +1,12 @@
 package com.auth.application.auth;
 
-import com.auth.config.AuthTokenProperties;
 import com.auth.domain.entities.Session;
 import com.auth.domain.entities.Token;
 import com.auth.domain.enums.TokenType;
 import com.auth.domain.ports.in.auth.AuthSessionResult;
 import com.auth.domain.ports.out.SessionsRepositoryPort;
 import com.auth.domain.ports.out.TokensRepositoryPort;
+import com.auth.infrastructure.security.AuthTokenProperties;
 import com.auth.lib.Utils;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

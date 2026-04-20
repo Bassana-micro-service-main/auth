@@ -1,4 +1,4 @@
-package com.auth.config;
+package com.auth.infrastructure.security;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

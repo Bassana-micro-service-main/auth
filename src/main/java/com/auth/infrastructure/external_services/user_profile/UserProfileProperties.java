@@ -1,4 +1,4 @@
-package com.auth.config;
+package com.auth.infrastructure.external_services.user_profile;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

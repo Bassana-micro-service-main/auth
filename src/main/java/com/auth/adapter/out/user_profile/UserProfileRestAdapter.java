@@ -1,9 +1,9 @@
 package com.auth.adapter.out.user_profile;
 
-import com.auth.config.UserProfileProperties;
 import com.auth.domain.errors.BusinessError;
 import com.auth.domain.errors.CodesError;
 import com.auth.domain.ports.out.UserProfileClientPort;
+import com.auth.infrastructure.external_services.user_profile.UserProfileProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Qualifier;

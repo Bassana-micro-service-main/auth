@@ -1,0 +1,12 @@
+---
+description: Enforce id and publicId usage boundaries
+alwaysApply: true
+---
+
+# Identifier Convention
+
+- Use `publicId` (nanoid) for public resource identifiers (route params and external-facing entity ids).
+- Use `id` (UUID) for internal database identity.
+- Fields like `profileId`, `userId`, `talkLangageId`, etc. are foreign keys and represent internal table `id` values (UUID), not `publicId`.
+- Keep existing variable names used by the project; do not rename identifiers unless explicitly requested.
+- Never expose internal root entity `id` as the public identifier of a resource.

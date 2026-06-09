@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.auth.units.use_case.sessions.GetSessionsUseCaseTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-04-11T19:26:31.975Z" hostname="mail.bassana.com" time="0.021">
+  <properties/>
+  <testcase name="findByPublicId()" classname="com.auth.units.use_case.sessions.GetSessionsUseCaseTest" time="0.006"/>
+  <testcase name="invalidPublicId()" classname="com.auth.units.use_case.sessions.GetSessionsUseCaseTest" time="0.004"/>
+  <testcase name="findByUserId()" classname="com.auth.units.use_case.sessions.GetSessionsUseCaseTest" time="0.003"/>
+  <testcase name="findByRefreshToken()" classname="com.auth.units.use_case.sessions.GetSessionsUseCaseTest" time="0.003"/>
+  <testcase name="nullUserId()" classname="com.auth.units.use_case.sessions.GetSessionsUseCaseTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

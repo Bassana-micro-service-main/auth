@@ -1,0 +1,24 @@
+---
+description: Index des regles d'architecture (microservices + API gateway)
+alwaysApply: true
+---
+
+# Architecture Rules Index
+
+Ce dossier regroupe les regles d'architecture detaillees pour les microservices Spring Boot et le futur `apo-gateway`.
+
+## Fichiers
+
+- `clean-hexagonal-layers.mdc` : separations strictes Domain/Application/Adapters/Infrastructure.
+- `api-gateway-implementation.mdc` : structure cible d'un API Gateway Spring Cloud Gateway.
+- `interservice-communication.mdc` : contrats HTTP, timeouts, idempotence, compatibilite.
+- `security-and-resilience.mdc` : auth, propagation d'identite, rate limit, circuit breaker.
+- `testing-and-observability.mdc` : strategie de tests, logs, tracing, metrics.
+- `deployment-and-config.mdc` : docker, profils, variables, readiness/liveness.
+
+## Regles transverses a conserver
+
+- Le domaine reste pur (pas de Spring/JPA).
+- Les use cases orchestrent, les adapters adaptent, l'infrastructure integre.
+- Pas de logique metier dans les controllers.
+- Les identifiants publics = `publicId` (nanoid), les id internes = `id` (UUID).

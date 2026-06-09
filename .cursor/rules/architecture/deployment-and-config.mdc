@@ -1,0 +1,42 @@
+---
+description: Regles de deploiement, docker et configuration multi-environnements
+alwaysApply: false
+---
+
+# Deployment And Config
+
+## 1. Environnements
+
+- Profils explicites: `dev`, `test`, `staging`, `prod`.
+- Valeurs par defaut sures; secrets obligatoires en prod.
+- Parite raisonnable entre dev et prod (meme stack DB/proxy quand possible).
+
+## 2. Dockerfiles
+
+- Multi-stage build obligatoire pour production.
+- Image runtime minimale (JRE/base image slim), user non-root.
+- `.dockerignore` obligatoire pour limiter le contexte de build.
+
+## 3. Docker Compose (dev)
+
+- Services nommes de facon explicite (`auth-dev-db`, `apo-gateway-dev`).
+- Healthchecks pour DB et services critiques.
+- `depends_on` conditionne a la sante quand disponible.
+- Volumes persistants pour DB; bind mount code si iteration rapide requise.
+
+## 4. Config app
+
+- `application.properties`/`yaml` sans secrets en dur.
+- URLs de services externes/interne parametrees via env vars.
+- Timeouts et pools de connexions parametres explicitement.
+
+## 5. Readiness/Liveness
+
+- Readiness: dependances necessaires au trafic (DB, cache, broker).
+- Liveness: etat process uniquement (pas de checks lourds).
+
+## 6. Livraison et CI/CD
+
+- Pipeline: lint -> tests unitaires -> integration -> build image -> scan securite.
+- Tagging image immutable (`<service>:<git-sha>`).
+- Migration schema versionnee (Flyway/Liquibase) avant rollout trafic.

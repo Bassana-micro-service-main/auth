@@ -1,0 +1,13 @@
+---
+description: Core project architecture and coding standards
+alwaysApply: true
+---
+
+# Project Standards
+
+- Use Clean Architecture.
+- Keep clear separation between domain, application, and infrastructure.
+- Use Java Spring Boot strictly.
+- Use Hibernate as ORM.
+- Prefer dependency injection.
+- Avoid business logic in controllers.

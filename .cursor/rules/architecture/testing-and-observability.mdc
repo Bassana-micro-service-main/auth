@@ -1,0 +1,37 @@
+---
+description: Regles de tests et observabilite pour services et gateway
+alwaysApply: false
+---
+
+# Testing And Observability
+
+## 1. Pyramid de tests
+
+- Unitaires: validateurs, use cases, mappers, adapters (avec mocks).
+- Integration: repository adapters + DB (Testcontainers recommande).
+- Contract tests: compatibilite producer/consumer inter-services.
+- E2E critiques: parcours login/register/refresh, flux transverses.
+
+## 2. Couverture minimale
+
+- Couvrir les cas positifs, erreurs metier, erreurs techniques, bords.
+- Chaque use case: succes + not found + validation invalide + propagation pannes.
+- Chaque controller: mapping request/response + status codes + erreurs.
+
+## 3. Observabilite standard
+
+- Logs structures JSON en prod.
+- Metrics Micrometer + Prometheus (`http.server.requests`, latence, erreurs).
+- Traces distribuees (OpenTelemetry) avec propagation W3C trace context.
+
+## 4. Correlation inter-services
+
+- `X-Request-Id` genere si absent au gateway.
+- `traceId`/`spanId` partout (gateway + services + clients sortants).
+- Rapporter les erreurs avec code metier + id de correlation.
+
+## 5. SLO techniques recommandes
+
+- Latence p95/p99 par endpoint cle.
+- Taux d'erreur 5xx par service.
+- Disponibilite de dependencies critiques (DB, services internes).

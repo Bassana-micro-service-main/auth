@@ -3,31 +3,28 @@ services:
   # ENV DEV
   # ============================================================================================
 
-  # ============================================
-  # API 
-  # ============================================
   api-dev:
     container_name: authentification-dev
     build:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - "8080:8080"
+      - "8100:8100"
     environment:
-      # Hostname = nom du service sur le réseau Docker (pas "db")
+      SERVER_PORT: "8100"
+      SERVER_SERVLET_CONTEXT_PATH: "/api"
       SPRING_DATASOURCE_URL: jdbc:postgresql://auth-dev-db:5432/auth_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_APPLICATION_JSON: '{"auth":{"user-profile":{"base-url":"http://host.docker.internal:8200"}}}'
+      AUDIT_SERVICE_URL: http://host.docker.internal:8300
     depends_on:
       - auth-dev-db
     restart: unless-stopped
     profiles: ["dev"]
 
-  # ============================================
-  # DB
-  # ============================================
   auth-dev-db:
-    image: postgres:18
+    image: postgres:16
     container_name: auth_dev_db
     environment:
       POSTGRES_DB: auth_db
@@ -40,44 +37,36 @@ services:
     restart: unless-stopped
     profiles: ["dev"]
 
+  # ============================================================================================
+  # ENV PROD
+  # ============================================================================================
 
-
- # ============================================================================================
- # ENV PROD
- # ============================================================================================
-
-  # ============================================
-  # API
-  # ============================================
   api-prod:
     container_name: authentification-prod
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8100:8100"
     environment:
+      SERVER_PORT: "8100"
+      SERVER_SERVLET_CONTEXT_PATH: "/api"
       SPRING_DATASOURCE_URL: jdbc:postgresql://auth-prod-db:5432/auth_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+      AUDIT_SERVICE_URL: http://audit-service:8300
     depends_on:
       - auth-prod-db
     restart: unless-stopped
     profiles: ["prod"]
 
-  
-  # ============================================
-  # DB
-  # ============================================
   auth-prod-db:
-    image: postgres:18
+    image: postgres:16
     container_name: auth_prod_db
     environment:
       POSTGRES_DB: auth_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    ports:
-      - "5433:5432"
     volumes:
       - pgdata-prod:/var/lib/postgresql/data
     restart: unless-stopped
